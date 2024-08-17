@@ -1,0 +1,16 @@
+{
+  "name": "video-stack",
+  "version": "1.0.0",
+  "description": "node project",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "arjunsaseendran",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.4",
+    "prettier": "^3.3.3"
+  }
+}
