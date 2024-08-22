@@ -1,5 +1,8 @@
 import { v2 as cloudinary } from 'cloudinary';
 import fs from 'fs'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 // configure cloudinary
 cloudinary.config({ 
@@ -23,4 +26,11 @@ const uploadOnCloudinary = async(localFilePath) => {
     }
 }
 
+const deleteFromCloudinary = async (publicId) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+}
 export {uploadOnCloudinary}
