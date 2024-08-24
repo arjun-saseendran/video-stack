@@ -109,6 +109,7 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 const loginUser = asyncHandler(async (req, res) => {
+
   // get data from body
   const { username, email, password } = req.body;
 
@@ -159,7 +160,12 @@ const loginUser = asyncHandler(async (req, res) => {
         "User logged in successfully"
       )
     );
-});
+    });
+
+const logoutUser = asyncHandler(async(req, res) => {
+    await User.findByIdAndUpdate()
+    // need to comeback here after middleware 
+})
 
 const refreshAccessToken = asyncHandler(async(req, res) => {
     const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken
