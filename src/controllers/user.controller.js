@@ -164,7 +164,20 @@ const loginUser = asyncHandler(async (req, res) => {
 
 const logoutUser = asyncHandler(async(req, res) => {
     await User.findByIdAndUpdate()
-    // need to comeback here after middleware 
+    req.user._id,{
+      $set: {
+        refreshToken: undefined
+      }
+    },
+    {new: true}
+
+    const options = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production'
+    }
+
+    return res.status(200).clearCookie('accessToken', options)
+    .clearCookie('refreshToken', options).json(new ApiResponse(200, {}, 'User logged out successfully'))
 })
 
 const refreshAccessToken = asyncHandler(async(req, res) => {
@@ -205,4 +218,27 @@ return res.status(200).cookie('accessToken', accessToken, options)
     }
 })
 
-export { registerUser, loginUser, refreshAccessToken };
+const changeCurrentPassword = asyncHandler(async (req, res) => {
+const {oldPassword, newPassword} =  req.body
+const user = await User.findById(req.user?._id)
+const isPasswordValid = await user.isPasswordCorrect(oldPassword)
+if(!isPasswordValid){
+  throw new ApiError(401, 'Old password is incorrect')
+}
+
+user.password = newPassword
+await user.save({validateBeforeSave: false})
+
+return res.status(200).json(new ApiResponse(200, {}, 'Password change successfully'))
+
+})
+
+const updateAccountDetails = asyncHandler(async (req, res) => {})
+
+const updateUserAvatar = asyncHandler(async (req, res) => {})
+
+const updateUserCoverImage = asyncHandler(async (req, res) => {})
+
+
+
+export { registerUser, loginUser, refreshAccessToken, logoutUser };
